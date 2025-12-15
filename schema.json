@@ -1,6 +1,6 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://github.com/charmbracelet/crush/internal/config/config",
+  "$id": "https://github.com/kehr/pluse/internal/config/config",
   "$ref": "#/$defs/Config",
   "$defs": {
     "Attribution": {
@@ -22,7 +22,7 @@
         },
         "generated_with": {
           "type": "boolean",
-          "description": "Add Generated with Crush line to commit messages and issues and PRs",
+          "description": "Add Generated with Pluse line to commit messages and issues and PRs",
           "default": true
         }
       },
@@ -361,7 +361,7 @@
             "type": "string",
             "examples": [
               ".cursorrules",
-              "CRUSH.md"
+              "PLUSE.md"
             ]
           },
           "type": "array",
@@ -389,9 +389,9 @@
         "data_directory": {
           "type": "string",
           "description": "Directory for storing application data (relative to working directory)",
-          "default": ".crush",
+          "default": ".pluse",
           "examples": [
-            ".crush"
+            ".pluse"
           ]
         },
         "disabled_tools": {
@@ -425,7 +425,7 @@
           "default": "AGENTS.md",
           "examples": [
             "AGENTS.md",
-            "CRUSH.md",
+            "PLUSE.md",
             "CLAUDE.md",
             "docs/LLMs.md"
           ]

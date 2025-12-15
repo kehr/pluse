@@ -1,4 +1,4 @@
-// Package logo renders a Crush wordmark in a stylized way.
+// Package logo renders a Pluse wordmark in a stylized way.
 package logo
 
 import (
@@ -8,35 +8,32 @@ import (
 
 	"charm.land/lipgloss/v2"
 	"github.com/MakeNowJust/heredoc"
-	"github.com/charmbracelet/crush/internal/tui/styles"
 	"github.com/charmbracelet/x/ansi"
 	"github.com/charmbracelet/x/exp/slice"
+	"github.com/kehr/pluse/internal/tui/styles"
 )
 
 // letterform represents a letterform. It can be stretched horizontally by
 // a given amount via the boolean argument.
 type letterform func(bool) string
 
-const diag = `╱`
+const diag = `~`
 
-// Opts are the options for rendering the Crush title art.
+// Opts are the options for rendering the Pluse title art.
 type Opts struct {
 	FieldColor   color.Color // diagonal lines
 	TitleColorA  color.Color // left gradient ramp point
 	TitleColorB  color.Color // right gradient ramp point
-	CharmColor   color.Color // Charm™ text color
 	VersionColor color.Color // Version text color
 	Width        int         // width of the rendered logo, used for truncation
 }
 
-// Render renders the Crush logo. Set the argument to true to render the narrow
+// Render renders the Pluse logo. Set the argument to true to render the narrow
 // version, intended for use in a sidebar.
 //
 // The compact argument determines whether it renders compact for the sidebar
 // or wider for the main pane.
 func Render(version string, compact bool, o Opts) string {
-	const charm = " Charm™"
-
 	fg := func(c color.Color, s string) string {
 		return lipgloss.NewStyle().Foreground(c).Render(s)
 	}
@@ -44,42 +41,41 @@ func Render(version string, compact bool, o Opts) string {
 	// Title.
 	const spacing = 1
 	letterforms := []letterform{
-		letterC,
-		letterR,
+		letterP,
+		letterL,
 		letterU,
 		letterSStylized,
-		letterH,
+		letterE,
 	}
 	stretchIndex := -1 // -1 means no stretching.
 	if !compact {
 		stretchIndex = cachedRandN(len(letterforms))
 	}
 
-	crush := renderWord(spacing, stretchIndex, letterforms...)
-	crushWidth := lipgloss.Width(crush)
+	pluse := renderWord(spacing, stretchIndex, letterforms...)
+	pluseWidth := lipgloss.Width(pluse)
 	b := new(strings.Builder)
-	for r := range strings.SplitSeq(crush, "\n") {
+	for r := range strings.SplitSeq(pluse, "\n") {
 		fmt.Fprintln(b, styles.ApplyForegroundGrad(r, o.TitleColorA, o.TitleColorB))
 	}
-	crush = b.String()
+	pluse = b.String()
 
-	// Charm and version.
-	metaRowGap := 1
-	maxVersionWidth := crushWidth - lipgloss.Width(charm) - metaRowGap
+	// Version row.
+	maxVersionWidth := pluseWidth - 1
 	version = ansi.Truncate(version, maxVersionWidth, "…") // truncate version if too long.
-	gap := max(0, crushWidth-lipgloss.Width(charm)-lipgloss.Width(version))
-	metaRow := fg(o.CharmColor, charm) + strings.Repeat(" ", gap) + fg(o.VersionColor, version)
+	gap := max(0, pluseWidth-lipgloss.Width(version))
+	metaRow := strings.Repeat(" ", gap) + fg(o.VersionColor, version)
 
-	// Join the meta row and big Crush title.
-	crush = strings.TrimSpace(metaRow + "\n" + crush)
+	// Join the meta row and big Pluse title.
+	pluse = strings.TrimSpace(metaRow + "\n" + pluse)
 
 	// Narrow version.
 	if compact {
-		field := fg(o.FieldColor, strings.Repeat(diag, crushWidth))
-		return strings.Join([]string{field, field, crush, field, ""}, "\n")
+		field := fg(o.FieldColor, strings.Repeat(diag, pluseWidth))
+		return strings.Join([]string{field, field, pluse, field, ""}, "\n")
 	}
 
-	fieldHeight := lipgloss.Height(crush)
+	fieldHeight := lipgloss.Height(pluse)
 
 	// Left field.
 	const leftWidth = 6
@@ -90,8 +86,8 @@ func Render(version string, compact bool, o Opts) string {
 	}
 
 	// Right field.
-	rightWidth := max(15, o.Width-crushWidth-leftWidth-2) // 2 for the gap.
-	const stepDownAt = 0
+	rightWidth := max(15, o.Width-pluseWidth-leftWidth-2) // 2 for the gap.
+	const stepDownAt = 999
 	rightField := new(strings.Builder)
 	for i := range fieldHeight {
 		width := rightWidth
@@ -103,7 +99,7 @@ func Render(version string, compact bool, o Opts) string {
 
 	// Return the wide version.
 	const hGap = " "
-	logo := lipgloss.JoinHorizontal(lipgloss.Top, leftField.String(), hGap, crush, hGap, rightField.String())
+	logo := lipgloss.JoinHorizontal(lipgloss.Top, leftField.String(), hGap, pluse, hGap, rightField.String())
 	if o.Width > 0 {
 		// Truncate the logo to the specified width.
 		lines := strings.Split(logo, "\n")
@@ -115,13 +111,12 @@ func Render(version string, compact bool, o Opts) string {
 	return logo
 }
 
-// SmallRender renders a smaller version of the Crush logo, suitable for
+// SmallRender renders a smaller version of the Pluse logo, suitable for
 // smaller windows or sidebar usage.
 func SmallRender(width int) string {
 	t := styles.CurrentTheme()
-	title := t.S().Base.Foreground(t.Secondary).Render("Charm™")
-	title = fmt.Sprintf("%s %s", title, styles.ApplyBoldForegroundGrad("Crush", t.Secondary, t.Primary))
-	remainingWidth := width - lipgloss.Width(title) - 1 // 1 for the space after "Crush"
+	title := styles.ApplyBoldForegroundGrad("Pluse", t.Secondary, t.Primary)
+	remainingWidth := width - lipgloss.Width(title) - 1 // 1 for the space after "Pluse"
 	if remainingWidth > 0 {
 		lines := strings.Repeat("╱", remainingWidth)
 		title = fmt.Sprintf("%s %s", title, t.S().Base.Foreground(t.Primary).Render(lines))
@@ -343,4 +338,98 @@ func stretchLetterformPart(s string, p letterformProps) string {
 		parts[i] = s
 	}
 	return lipgloss.JoinHorizontal(lipgloss.Top, parts...)
+}
+
+// letterP renders the letter P in a stylized way. It takes a boolean that
+// determines whether to stretch the letter.
+func letterP(stretch bool) string {
+	// Here's what we're making:
+	//
+	// █▀▀▀▄
+	// █▀▀▀
+	// ▀
+
+	left := heredoc.Doc(`
+		█
+		█
+		▀
+	`)
+	centerTop := heredoc.Doc(`
+		▀
+		▀
+	`)
+	right := heredoc.Doc(`
+		▄
+
+	`)
+	return joinLetterform(
+		left,
+		stretchLetterformPart(centerTop, letterformProps{
+			stretch:    stretch,
+			width:      3,
+			minStretch: 7,
+			maxStretch: 12,
+		}),
+		right,
+	)
+}
+
+// letterL renders the letter L in a stylized way. It takes a boolean that
+// determines whether to stretch the letter.
+func letterL(stretch bool) string {
+	// Here's what we're making:
+	//
+	// █
+	// █
+	// ▀▀▀▀
+
+	left := heredoc.Doc(`
+		█
+		█
+		▀
+	`)
+	bottom := heredoc.Doc(`
+
+
+		▀
+	`)
+	return joinLetterform(
+		left,
+		stretchLetterformPart(bottom, letterformProps{
+			stretch:    stretch,
+			width:      3,
+			minStretch: 7,
+			maxStretch: 12,
+		}),
+	)
+}
+
+// letterE renders the letter E in a stylized way. It takes a boolean that
+// determines whether to stretch the letter.
+func letterE(stretch bool) string {
+	// Here's what we're making:
+	//
+	// █▀▀▀▀
+	// █▀▀▀
+	// ▀▀▀▀
+
+	left := heredoc.Doc(`
+		█
+		█
+		▀
+	`)
+	right := heredoc.Doc(`
+		▀
+		▀
+		▀
+	`)
+	return joinLetterform(
+		left,
+		stretchLetterformPart(right, letterformProps{
+			stretch:    stretch,
+			width:      3,
+			minStretch: 7,
+			maxStretch: 12,
+		}),
+	)
 }

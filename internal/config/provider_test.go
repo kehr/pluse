@@ -76,8 +76,8 @@ func TestProvider_WithValidCache(t *testing.T) {
 	resetProviderState()
 	defer resetProviderState()
 
-	cachePath := tmpDir + "/crush/providers.json"
-	require.NoError(t, os.MkdirAll(tmpDir+"/crush", 0o755))
+	cachePath := tmpDir + "/pluse/providers.json"
+	require.NoError(t, os.MkdirAll(tmpDir+"/pluse", 0o755))
 	cachedProviders := []catwalk.Provider{
 		{Name: "Cached"},
 	}
@@ -101,8 +101,8 @@ func TestProvider_NotModifiedUsesCached(t *testing.T) {
 	resetProviderState()
 	defer resetProviderState()
 
-	cachePath := tmpDir + "/crush/providers.json"
-	require.NoError(t, os.MkdirAll(tmpDir+"/crush", 0o755))
+	cachePath := tmpDir + "/pluse/providers.json"
+	require.NoError(t, os.MkdirAll(tmpDir+"/pluse", 0o755))
 	cachedProviders := []catwalk.Provider{
 		{Name: "Cached"},
 	}
@@ -123,8 +123,8 @@ func TestProvider_EmptyCacheDefaultsToEmbedded(t *testing.T) {
 	resetProviderState()
 	defer resetProviderState()
 
-	cachePath := tmpDir + "/crush/providers.json"
-	require.NoError(t, os.MkdirAll(tmpDir+"/crush", 0o755))
+	cachePath := tmpDir + "/pluse/providers.json"
+	require.NoError(t, os.MkdirAll(tmpDir+"/pluse", 0o755))
 	emptyProviders := []catwalk.Provider{}
 	data, err := json.Marshal(emptyProviders)
 	require.NoError(t, err)

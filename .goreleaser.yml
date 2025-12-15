@@ -2,21 +2,20 @@
 # vim: set ts=2 sw=2 tw=0 fo=jcroql
 version: 2
 
-project_name: crush
+project_name: pluse
 
-includes:
-  - from_url:
-      url: charmbracelet/meta/main/notarize.yaml
+# includes:
+#   - from_url:
+#       url: charmbracelet/meta/main/notarize.yaml
 
 metadata:
   mod_timestamp: "{{ .CommitTimestamp }}"
   license: "FSL-1.1-MIT"
-  homepage: "https://charm.sh/crush"
+  homepage: "https://github.com/kehr/pluse"
   description: "A powerful terminal-based AI assistant for developers, providing intelligent coding assistance directly in your terminal."
   full_description: "A powerful terminal-based AI assistant for developers, providing intelligent coding assistance directly in your terminal."
   maintainers:
-    - "kujtimiihoxha <kujtim@charm.sh>"
-    - "caarlos0 <carlos@charm.sh>" # for aur
+    - "kehr <kehr.dev@gmail.com>"
 
 nightly:
   publish_release: true
@@ -33,10 +32,10 @@ before:
     - mkdir completions
     - rm -rf manpages
     - mkdir manpages
-    - sh -c 'go run . completion bash >./completions/crush.bash'
-    - sh -c 'go run . completion zsh >./completions/crush.zsh'
-    - sh -c 'go run . completion fish >./completions/crush.fish'
-    - sh -c 'go run . man | gzip -c >./manpages/crush.1.gz'
+    - sh -c 'go run . completion bash >./completions/pluse.bash'
+    - sh -c 'go run . completion zsh >./completions/pluse.zsh'
+    - sh -c 'go run . completion fish >./completions/pluse.fish'
+    - sh -c 'go run . man | gzip -c >./manpages/pluse.1.gz'
 
 # gomod:
 #   proxy: true
@@ -70,13 +69,13 @@ builds:
       - goos: windows
         goarch: arm
     ldflags:
-      - -s -w -X github.com/charmbracelet/crush/internal/version.Version={{.Version}}
+      - -s -w -X github.com/kehr/pluse/internal/version.Version={{.Version}}
     flags:
       - -trimpath
 
 archives:
   - name_template: >-
-      crush_
+      pluse_
       {{- .Version }}_
       {{- title .Os }}_
       {{- if eq .Arch "amd64" }}x86_64
@@ -99,10 +98,10 @@ checksum:
 aur_sources:
   - private_key: "{{ .Env.AUR_KEY }}"
     disable: "{{ with .Prerelease }}true{{ end }}"
-    git_url: "ssh://aur@aur.archlinux.org/crush.git"
+    git_url: "ssh://aur@aur.archlinux.org/pluse.git"
     commit_author:
-      name: "Charm"
-      email: "charmcli@users.noreply.github.com"
+      name: "kehr"
+      email: "kehr.dev@gmail.com"
     makedepends:
       - go
       - git
@@ -117,59 +116,60 @@ aur_sources:
       export CGO_LDFLAGS="${LDFLAGS}"
       export GOFLAGS="-buildmode=pie -trimpath -mod=readonly -modcacherw"
       go build -ldflags="-w -s -buildid='' -linkmode=external -X main.version=v${pkgver}" .
-      ./crush completion bash >./completions/crush.bash
-      ./crush completion zsh >./completions/crush.zsh
-      ./crush completion fish >./completions/crush.fish
-      ./crush man | gzip -c >./manpages/crush.1.gz
+      ./pluse completion bash >./completions/pluse.bash
+      ./pluse completion zsh >./completions/pluse.zsh
+      ./pluse completion fish >./completions/pluse.fish
+      ./pluse man | gzip -c >./manpages/pluse.1.gz
     package: |-
       # bin
-      install -Dm755 "./crush" "${pkgdir}/usr/bin/crush"
+      install -Dm755 "./pluse" "${pkgdir}/usr/bin/pluse"
       # license
-      mkdir -p "${pkgdir}/usr/share/licenses/crush/"
-      install -Dm644 ./LICENSE* "${pkgdir}/usr/share/licenses/crush/"
+      mkdir -p "${pkgdir}/usr/share/licenses/pluse/"
+      install -Dm644 ./LICENSE* "${pkgdir}/usr/share/licenses/pluse/"
       # completions
       mkdir -p "${pkgdir}/usr/share/bash-completion/completions/"
       mkdir -p "${pkgdir}/usr/share/zsh/site-functions/"
       mkdir -p "${pkgdir}/usr/share/fish/vendor_completions.d/"
-      install -Dm644 "./completions/crush.bash" "${pkgdir}/usr/share/bash-completion/completions/crush"
-      install -Dm644 "./completions/crush.zsh" "${pkgdir}/usr/share/zsh/site-functions/_crush"
-      install -Dm644 "./completions/crush.fish" "${pkgdir}/usr/share/fish/vendor_completions.d/crush.fish"
+      install -Dm644 "./completions/pluse.bash" "${pkgdir}/usr/share/bash-completion/completions/pluse"
+      install -Dm644 "./completions/pluse.zsh" "${pkgdir}/usr/share/zsh/site-functions/_pluse"
+      install -Dm644 "./completions/pluse.fish" "${pkgdir}/usr/share/fish/vendor_completions.d/pluse.fish"
       # man pages
-      install -Dm644 "./manpages/crush.1.gz" "${pkgdir}/usr/share/man/man1/crush.1.gz"
+      install -Dm644 "./manpages/pluse.1.gz" "${pkgdir}/usr/share/man/man1/pluse.1.gz"
       # readme
-      mkdir -pv "${pkgdir}/usr/share/doc/crush/"
-      install -Dm644 README* "${pkgdir}/usr/share/doc/crush/"
+      mkdir -pv "${pkgdir}/usr/share/doc/pluse/"
+      install -Dm644 README* "${pkgdir}/usr/share/doc/pluse/"
 
 aurs:
   - private_key: "{{ .Env.AUR_KEY }}"
     disable: "{{ with .Prerelease }}true{{ end }}"
-    git_url: "ssh://aur@aur.archlinux.org/crush-bin.git"
+    git_url: "ssh://aur@aur.archlinux.org/pluse-bin.git"
     commit_author:
-      name: "Charm"
-      email: "charmcli@users.noreply.github.com"
+      name: "kehr"
+      email: "kehr.dev@gmail.com"
     provides:
-      - crush
+      - pluse
+      - pluse
     conflicts:
-      - crush
+      - pluse
     package: |-
-      cd "${srcdir}/crush_${pkgver}_Linux_${CARCH}"
+      cd "${srcdir}/pluse_${pkgver}_Linux_${CARCH}"
       # bin
-      install -Dm755 "./crush" "${pkgdir}/usr/bin/crush"
+      install -Dm755 "./pluse" "${pkgdir}/usr/bin/pluse"
       # license
-      mkdir -p "${pkgdir}/usr/share/licenses/crush/"
-      install -Dm644 ./LICENSE* "${pkgdir}/usr/share/licenses/crush/"
+      mkdir -p "${pkgdir}/usr/share/licenses/pluse/"
+      install -Dm644 ./LICENSE* "${pkgdir}/usr/share/licenses/pluse/"
       # completions
       mkdir -p "${pkgdir}/usr/share/bash-completion/completions/"
       mkdir -p "${pkgdir}/usr/share/zsh/site-functions/"
       mkdir -p "${pkgdir}/usr/share/fish/vendor_completions.d/"
-      install -Dm644 "./completions/crush.bash" "${pkgdir}/usr/share/bash-completion/completions/crush"
-      install -Dm644 "./completions/crush.zsh" "${pkgdir}/usr/share/zsh/site-functions/_crush"
-      install -Dm644 "./completions/crush.fish" "${pkgdir}/usr/share/fish/vendor_completions.d/crush.fish"
+      install -Dm644 "./completions/pluse.bash" "${pkgdir}/usr/share/bash-completion/completions/pluse"
+      install -Dm644 "./completions/pluse.zsh" "${pkgdir}/usr/share/zsh/site-functions/_pluse"
+      install -Dm644 "./completions/pluse.fish" "${pkgdir}/usr/share/fish/vendor_completions.d/pluse.fish"
       # man pages
-      install -Dm644 "./manpages/crush.1.gz" "${pkgdir}/usr/share/man/man1/crush.1.gz"
+      install -Dm644 "./manpages/pluse.1.gz" "${pkgdir}/usr/share/man/man1/pluse.1.gz"
       # readme
-      mkdir -pv "${pkgdir}/usr/share/doc/crush/"
-      install -Dm644 README* "${pkgdir}/usr/share/doc/crush/"
+      mkdir -pv "${pkgdir}/usr/share/doc/pluse/"
+      install -Dm644 README* "${pkgdir}/usr/share/doc/pluse/"
 
 furies:
   - disable: "{{ if (or .Prerelease .IsNightly) }}true{{ end }}"
@@ -178,13 +178,13 @@ furies:
 
 brews:
   - repository:
-      owner: charmbracelet
+      owner: kehr
       name: homebrew-tap
       token: "{{ .Env.HOMEBREW_TAP_GITHUB_TOKEN }}"
     skip_upload: "{{ with .Prerelease }}true{{ end }}"
     commit_author:
-      name: "Charm"
-      email: "charmcli@users.noreply.github.com"
+      name: "kehr"
+      email: "kehr.dev@gmail.com"
     goarm: 7
     extra_install: |-
       bash_completion.install "completions/{{ .ProjectName }}.bash" => "{{ .ProjectName }}"
@@ -194,18 +194,18 @@ brews:
 
 scoops:
   - repository:
-      owner: charmbracelet
+      owner: kehr
       name: scoop-bucket
       token: "{{ .Env.HOMEBREW_TAP_GITHUB_TOKEN }}"
     skip_upload: "{{ with .Prerelease }}true{{ end }}"
     commit_author:
-      name: "Charm"
-      email: "charmcli@users.noreply.github.com"
+      name: "kehr"
+      email: "kehr.dev@gmail.com"
 
 npms:
-  - name: "@charmland/crush"
-    repository: "git+https://github.com/charmbracelet/crush.git"
-    bugs: https://github.com/charmbracelet/crush/issues
+  - name: "@kehr/pluse"
+    repository: "git+https://github.com/kehr/pluse.git"
+    bugs: https://github.com/kehr/pluse/issues
     access: public
     disable: "{{ with .Prerelease }}true{{ end }}"
 
@@ -218,14 +218,14 @@ nfpms:
       - termux.deb
     file_name_template: "{{ .ConventionalFileName }}"
     contents:
-      - src: ./completions/crush.bash
-        dst: '{{ if eq .Format "termux.deb" }}/data/data/com.termux/files/usr{{ end }}/etc/bash_completion.d/crush'
-      - src: ./completions/crush.fish
-        dst: '{{ if eq .Format "termux.deb" }}/data/data/com.termux/files{{ end }}/usr/share/fish/vendor_completions.d/crush.fish'
-      - src: ./completions/crush.zsh
-        dst: '{{ if eq .Format "termux.deb" }}/data/data/com.termux/files{{ end }}/usr/share/zsh/site-functions/_crush'
-      - src: ./manpages/crush.1.gz
-        dst: '{{ if eq .Format "termux.deb" }}/data/data/com.termux/files{{ end }}/usr/share/man/man1/crush.1.gz'
+      - src: ./completions/pluse.bash
+        dst: '{{ if eq .Format "termux.deb" }}/data/data/com.termux/files/usr{{ end }}/etc/bash_completion.d/pluse'
+      - src: ./completions/pluse.fish
+        dst: '{{ if eq .Format "termux.deb" }}/data/data/com.termux/files{{ end }}/usr/share/fish/vendor_completions.d/pluse.fish'
+      - src: ./completions/pluse.zsh
+        dst: '{{ if eq .Format "termux.deb" }}/data/data/com.termux/files{{ end }}/usr/share/zsh/site-functions/_pluse'
+      - src: ./manpages/pluse.1.gz
+        dst: '{{ if eq .Format "termux.deb" }}/data/data/com.termux/files{{ end }}/usr/share/man/man1/pluse.1.gz'
     rpm:
       signature:
         key_file: '{{ if ne (index .Env "GPG_KEY_PATH") "" }}{{ .Env.GPG_KEY_PATH }}{{ else }}{{ end }}'
@@ -254,33 +254,33 @@ sboms:
 
 nix:
   - repository:
-      owner: "charmbracelet"
+      owner: "kehr"
       name: nur
       token: "{{ .Env.HOMEBREW_TAP_GITHUB_TOKEN }}"
     commit_author:
-      name: "Charm"
-      email: "charmcli@users.noreply.github.com"
+      name: "kehr"
+      email: "kehr.dev@gmail.com"
     license: fsl11Mit
     skip_upload: "{{ with .Prerelease }}true{{ end }}"
     extra_install: |-
-      installManPage ./manpages/crush.1.gz
+      installManPage ./manpages/pluse.1.gz
       installShellCompletion ./completions/*
 
 winget:
-  - publisher: charmbracelet
-    copyright: Charmbracelet, Inc
-    publisher_url: https://charm.land
-    release_notes_url: "https://github.com/charmbracelet/crush/releases/tag/{{.Tag}}"
-    license_url: https://github.com/charmbracelet/crush/blob/main/LICENSE.md
+  - publisher: kehr
+    copyright: kehr
+    publisher_url: https://github.com/kehr
+    release_notes_url: "https://github.com/kehr/pluse/releases/tag/{{.Tag}}"
+    license_url: https://github.com/kehr/pluse/blob/main/LICENSE.md
     skip_upload: "{{ with .Prerelease }}true{{ end }}"
     commit_author:
-      name: "Charm"
-      email: "charmcli@users.noreply.github.com"
+      name: "kehr"
+      email: "kehr.dev@gmail.com"
     repository:
-      owner: "charmbracelet"
+      owner: "kehr"
       name: winget-pkgs
       token: "{{ .Env.HOMEBREW_TAP_GITHUB_TOKEN }}"
-      branch: "crush-{{.Version}}"
+      branch: "pluse-{{.Version}}"
       pull_request:
         enabled: true
         draft: false
@@ -336,6 +336,6 @@ changelog:
 
 release:
   prerelease: auto
-  footer:
-    from_url:
-      url: https://raw.githubusercontent.com/charmbracelet/meta/main/footer.md
+  # footer:
+  #   from_url:
+  #     url: https://raw.githubusercontent.com/charmbracelet/meta/main/footer.md

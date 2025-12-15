@@ -9,25 +9,25 @@ import (
 	tea "charm.land/bubbletea/v2"
 	"charm.land/lipgloss/v2"
 	"github.com/charmbracelet/catwalk/pkg/catwalk"
-	"github.com/charmbracelet/crush/internal/config"
-	"github.com/charmbracelet/crush/internal/csync"
-	"github.com/charmbracelet/crush/internal/diff"
-	"github.com/charmbracelet/crush/internal/fsext"
-	"github.com/charmbracelet/crush/internal/history"
-	"github.com/charmbracelet/crush/internal/home"
-	"github.com/charmbracelet/crush/internal/lsp"
-	"github.com/charmbracelet/crush/internal/pubsub"
-	"github.com/charmbracelet/crush/internal/session"
-	"github.com/charmbracelet/crush/internal/tui/components/chat"
-	"github.com/charmbracelet/crush/internal/tui/components/core"
-	"github.com/charmbracelet/crush/internal/tui/components/core/layout"
-	"github.com/charmbracelet/crush/internal/tui/components/files"
-	"github.com/charmbracelet/crush/internal/tui/components/logo"
-	lspcomponent "github.com/charmbracelet/crush/internal/tui/components/lsp"
-	"github.com/charmbracelet/crush/internal/tui/components/mcp"
-	"github.com/charmbracelet/crush/internal/tui/styles"
-	"github.com/charmbracelet/crush/internal/tui/util"
-	"github.com/charmbracelet/crush/internal/version"
+	"github.com/kehr/pluse/internal/config"
+	"github.com/kehr/pluse/internal/csync"
+	"github.com/kehr/pluse/internal/diff"
+	"github.com/kehr/pluse/internal/fsext"
+	"github.com/kehr/pluse/internal/history"
+	"github.com/kehr/pluse/internal/home"
+	"github.com/kehr/pluse/internal/lsp"
+	"github.com/kehr/pluse/internal/pubsub"
+	"github.com/kehr/pluse/internal/session"
+	"github.com/kehr/pluse/internal/tui/components/chat"
+	"github.com/kehr/pluse/internal/tui/components/core"
+	"github.com/kehr/pluse/internal/tui/components/core/layout"
+	"github.com/kehr/pluse/internal/tui/components/files"
+	"github.com/kehr/pluse/internal/tui/components/logo"
+	lspcomponent "github.com/kehr/pluse/internal/tui/components/lsp"
+	"github.com/kehr/pluse/internal/tui/components/mcp"
+	"github.com/kehr/pluse/internal/tui/styles"
+	"github.com/kehr/pluse/internal/tui/util"
+	"github.com/kehr/pluse/internal/version"
 	"golang.org/x/text/cases"
 	"golang.org/x/text/language"
 )
@@ -283,7 +283,6 @@ func (m *sidebarCmp) logoBlock() string {
 		FieldColor:   t.Primary,
 		TitleColorA:  t.Secondary,
 		TitleColorB:  t.Primary,
-		CharmColor:   t.Secondary,
 		VersionColor: t.Primary,
 		Width:        m.width - 2,
 	})

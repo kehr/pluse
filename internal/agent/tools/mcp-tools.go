@@ -5,8 +5,8 @@ import (
 	"fmt"
 
 	"charm.land/fantasy"
-	"github.com/charmbracelet/crush/internal/agent/tools/mcp"
-	"github.com/charmbracelet/crush/internal/permission"
+	"github.com/kehr/pluse/internal/agent/tools/mcp"
+	"github.com/kehr/pluse/internal/permission"
 )
 
 // GetMCPTools gets all the currently available MCP tools.

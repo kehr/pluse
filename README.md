@@ -1,22 +1,22 @@
-# Crush
+# Pluse
 
 <p align="center">
-    <a href="https://stuff.charm.sh/crush/charm-crush.png"><img width="450" alt="Charm Crush Logo" src="https://github.com/user-attachments/assets/adc1a6f4-b284-4603-836c-59038caa2e8b" /></a><br />
-    <a href="https://github.com/charmbracelet/crush/releases"><img src="https://img.shields.io/github/release/charmbracelet/crush" alt="Latest Release"></a>
-    <a href="https://github.com/charmbracelet/crush/actions"><img src="https://github.com/charmbracelet/crush/actions/workflows/build.yml/badge.svg" alt="Build Status"></a>
+    <a href="https://stuff.charm.sh/pluse/charm-pluse.png"><img width="450" alt="Charm Pluse Logo" src="https://github.com/user-attachments/assets/adc1a6f4-b284-4603-836c-59038caa2e8b" /></a><br />
+    <a href="https://github.com/kehr/pluse/releases"><img src="https://img.shields.io/github/release/kehr/pluse" alt="Latest Release"></a>
+    <a href="https://github.com/kehr/pluse/actions"><img src="https://github.com/kehr/pluse/actions/workflows/build.yml/badge.svg" alt="Build Status"></a>
 </p>
 
 <p align="center">Your new coding bestie, now available in your favourite terminal.<br />Your tools, your code, and your workflows, wired into your LLM of choice.</p>
 <p align="center">你的新编程伙伴，现在就在你最爱的终端中。<br />你的工具、代码和工作流，都与您选择的 LLM 模型紧密相连。</p>
 
-<p align="center"><img width="800" alt="Crush Demo" src="https://github.com/user-attachments/assets/58280caf-851b-470a-b6f7-d5c4ea8a1968" /></p>
+<p align="center"><img width="800" alt="Pluse Demo" src="https://github.com/user-attachments/assets/58280caf-851b-470a-b6f7-d5c4ea8a1968" /></p>
 
 ## Features
 
 - **Multi-Model:** choose from a wide range of LLMs or add your own via OpenAI- or Anthropic-compatible APIs
 - **Flexible:** switch LLMs mid-session while preserving context
 - **Session-Based:** maintain multiple work sessions and contexts per project
-- **LSP-Enhanced:** Crush uses LSPs for additional context, just like you do
+- **LSP-Enhanced:** Pluse uses LSPs for additional context, just like you do
 - **Extensible:** add capabilities via MCPs (`http`, `stdio`, and `sse`)
 - **Works Everywhere:** first-class support in every terminal on macOS, Linux, Windows (PowerShell and WSL), FreeBSD, OpenBSD, and NetBSD
 
@@ -26,48 +26,48 @@ Use a package manager:
 
 ```bash
 # Homebrew
-brew install charmbracelet/tap/crush
+brew install charmbracelet/tap/pluse
 
 # NPM
-npm install -g @charmland/crush
+npm install -g @charmland/pluse
 
 # Arch Linux (btw)
-yay -S crush-bin
+yay -S pluse-bin
 
 # Nix
-nix run github:numtide/nix-ai-tools#crush
+nix run github:numtide/nix-ai-tools#pluse
 ```
 
 Windows users:
 
 ```bash
 # Winget
-winget install charmbracelet.crush
+winget install charmbracelet.pluse
 
 # Scoop
 scoop bucket add charm https://github.com/charmbracelet/scoop-bucket.git
-scoop install crush
+scoop install pluse
 ```
 
 <details>
 <summary><strong>Nix (NUR)</strong></summary>
 
-Crush is available via [NUR](https://github.com/nix-community/NUR) in `nur.repos.charmbracelet.crush`.
+Pluse is available via [NUR](https://github.com/nix-community/NUR) in `nur.repos.charmbracelet.pluse`.
 
-You can also try out Crush via `nix-shell`:
+You can also try out Pluse via `nix-shell`:
 
 ```bash
 # Add the NUR channel.
 nix-channel --add https://github.com/nix-community/NUR/archive/main.tar.gz nur
 nix-channel --update
 
-# Get Crush in a Nix shell.
-nix-shell -p '(import <nur> { pkgs = import <nixpkgs> {}; }).repos.charmbracelet.crush'
+# Get Pluse in a Nix shell.
+nix-shell -p '(import <nur> { pkgs = import <nixpkgs> {}; }).repos.charmbracelet.pluse'
 ```
 
 ### NixOS & Home Manager Module Usage via NUR
 
-Crush provides NixOS and Home Manager modules via NUR.
+Pluse provides NixOS and Home Manager modules via NUR.
 You can use these modules directly in your flake by importing them from NUR. Since it auto detects whether its a home manager or nixos context you can use the import the exact same way :)
 
 ```nix
@@ -82,9 +82,9 @@ You can use these modules directly in your flake by importing them from NUR. Sin
       system = "x86_64-linux";
       modules = [
         nur.modules.nixos.default
-        nur.repos.charmbracelet.modules.crush
+        nur.repos.charmbracelet.modules.pluse
         {
-          programs.crush = {
+          programs.pluse = {
             enable = true;
             settings = {
               providers = {
@@ -129,7 +129,7 @@ You can use these modules directly in your flake by importing them from NUR. Sin
 sudo mkdir -p /etc/apt/keyrings
 curl -fsSL https://repo.charm.sh/apt/gpg.key | sudo gpg --dearmor -o /etc/apt/keyrings/charm.gpg
 echo "deb [signed-by=/etc/apt/keyrings/charm.gpg] https://repo.charm.sh/apt/ * *" | sudo tee /etc/apt/sources.list.d/charm.list
-sudo apt update && sudo apt install crush
+sudo apt update && sudo apt install pluse
 ```
 
 </details>
@@ -144,7 +144,7 @@ baseurl=https://repo.charm.sh/yum/
 enabled=1
 gpgcheck=1
 gpgkey=https://repo.charm.sh/yum/gpg.key' | sudo tee /etc/yum.repos.d/charm.repo
-sudo yum install crush
+sudo yum install pluse
 ```
 
 </details>
@@ -154,16 +154,16 @@ Or, download it:
 - [Packages][releases] are available in Debian and RPM formats
 - [Binaries][releases] are available for Linux, macOS, Windows, FreeBSD, OpenBSD, and NetBSD
 
-[releases]: https://github.com/charmbracelet/crush/releases
+[releases]: https://github.com/kehr/pluse/releases
 
 Or just install it with Go:
 
 ```
-go install github.com/charmbracelet/crush@latest
+go install github.com/kehr/pluse@latest
 ```
 
 > [!WARNING]
-> Productivity may increase when using Crush and you may find yourself nerd
+> Productivity may increase when using Pluse and you may find yourself nerd
 > sniped when first using the application. If the symptoms persist, join the
 > [Discord][discord] and nerd snipe the rest of us.
 
@@ -171,7 +171,7 @@ go install github.com/charmbracelet/crush@latest
 
 The quickest way to get started is to grab an API key for your preferred
 provider such as Anthropic, OpenAI, Groq, or OpenRouter and just start
-Crush. You'll be prompted to enter your API key.
+Pluse. You'll be prompted to enter your API key.
 
 That said, you can also set environment variables for preferred providers.
 
@@ -197,21 +197,21 @@ That said, you can also set environment variables for preferred providers.
 
 ### By the Way
 
-Is there a provider you’d like to see in Crush? Is there an existing model that needs an update?
+Is there a provider you’d like to see in Pluse? Is there an existing model that needs an update?
 
-Crush’s default model listing is managed in [Catwalk](https://github.com/charmbracelet/catwalk), a community-supported, open source repository of Crush-compatible models, and you’re welcome to contribute.
+Pluse’s default model listing is managed in [Catwalk](https://github.com/charmbracelet/catwalk), a community-supported, open source repository of Pluse-compatible models, and you’re welcome to contribute.
 
 <a href="https://github.com/charmbracelet/catwalk"><img width="174" height="174" alt="Catwalk Badge" src="https://github.com/user-attachments/assets/95b49515-fe82-4409-b10d-5beb0873787d" /></a>
 
 ## Configuration
 
-Crush runs great with no configuration. That said, if you do need or want to
-customize Crush, configuration can be added either local to the project itself,
+Pluse runs great with no configuration. That said, if you do need or want to
+customize Pluse, configuration can be added either local to the project itself,
 or globally, with the following priority:
 
-1. `.crush.json`
-2. `crush.json`
-3. `$HOME/.config/crush/crush.json`
+1. `.pluse.json`
+2. `pluse.json`
+3. `$HOME/.config/pluse/pluse.json`
 
 Configuration itself is stored as a JSON object:
 
@@ -222,24 +222,24 @@ Configuration itself is stored as a JSON object:
 }
 ```
 
-As an additional note, Crush also stores ephemeral data, such as application state, in one additional location:
+As an additional note, Pluse also stores ephemeral data, such as application state, in one additional location:
 
 ```bash
 # Unix
-$HOME/.local/share/crush/crush.json
+$HOME/.local/share/pluse/pluse.json
 
 # Windows
-%LOCALAPPDATA%\crush\crush.json
+%LOCALAPPDATA%\pluse\pluse.json
 ```
 
 ### LSPs
 
-Crush can use LSPs for additional context to help inform its decisions, just
+Pluse can use LSPs for additional context to help inform its decisions, just
 like you would. LSPs can be added manually like so:
 
 ```json
 {
-  "$schema": "https://charm.land/crush.json",
+  "$schema": "https://charm.land/pluse.json",
   "lsp": {
     "go": {
       "command": "gopls",
@@ -260,14 +260,14 @@ like you would. LSPs can be added manually like so:
 
 ### MCPs
 
-Crush also supports Model Context Protocol (MCP) servers through three
+Pluse also supports Model Context Protocol (MCP) servers through three
 transport types: `stdio` for command-line servers, `http` for HTTP endpoints,
 and `sse` for Server-Sent Events. Environment variable expansion is supported
 using `$(echo $VAR)` syntax.
 
 ```json
 {
-  "$schema": "https://charm.land/crush.json",
+  "$schema": "https://charm.land/pluse.json",
   "mcp": {
     "filesystem": {
       "type": "stdio",
@@ -305,23 +305,23 @@ using `$(echo $VAR)` syntax.
 
 ### Ignoring Files
 
-Crush respects `.gitignore` files by default, but you can also create a
-`.crushignore` file to specify additional files and directories that Crush
+Pluse respects `.gitignore` files by default, but you can also create a
+`.pluseignore` file to specify additional files and directories that Pluse
 should ignore. This is useful for excluding files that you want in version
-control but don't want Crush to consider when providing context.
+control but don't want Pluse to consider when providing context.
 
-The `.crushignore` file uses the same syntax as `.gitignore` and can be placed
+The `.pluseignore` file uses the same syntax as `.gitignore` and can be placed
 in the root of your project or in subdirectories.
 
 ### Allowing Tools
 
-By default, Crush will ask you for permission before running tool calls. If
+By default, Pluse will ask you for permission before running tool calls. If
 you'd like, you can allow tools to be executed without prompting you for
 permissions. Use this with care.
 
 ```json
 {
-  "$schema": "https://charm.land/crush.json",
+  "$schema": "https://charm.land/pluse.json",
   "permissions": {
     "allowed_tools": [
       "view",
@@ -334,18 +334,18 @@ permissions. Use this with care.
 }
 ```
 
-You can also skip all permission prompts entirely by running Crush with the
+You can also skip all permission prompts entirely by running Pluse with the
 `--yolo` flag. Be very, very careful with this feature.
 
 ### Disabling Built-In Tools
 
-If you'd like to prevent Crush from using certain built-in tools entirely, you
+If you'd like to prevent Pluse from using certain built-in tools entirely, you
 can disable them via the `options.disabled_tools` list. Disabled tools are
 completely hidden from the agent.
 
 ```json
 {
-  "$schema": "https://charm.land/crush.json",
+  "$schema": "https://charm.land/pluse.json",
   "options": {
     "disabled_tools": [
       "bash",
@@ -359,14 +359,14 @@ To disable tools from MCP servers, see the [MCP config section](#mcps).
 
 ### Initialization
 
-When you initialize a project, Crush analyzes your codebase and creates
+When you initialize a project, Pluse analyzes your codebase and creates
 a context file that helps it work more effectively in future sessions.
 By default, this file is named `AGENTS.md`, but you can customize the
 name and location with the `initialize_as` option:
 
 ```json
 {
-  "$schema": "https://charm.land/crush.json",
+  "$schema": "https://charm.land/pluse.json",
   "options": {
     "initialize_as": "AGENTS.md"
   }
@@ -374,19 +374,19 @@ name and location with the `initialize_as` option:
 ```
 
 This is useful if you prefer a different naming convention or want to
-place the file in a specific directory (e.g., `CRUSH.md` or
-`docs/LLMs.md`). Crush will fill the file with project-specific context
+place the file in a specific directory (e.g., `PLUSE.md` or
+`docs/LLMs.md`). Pluse will fill the file with project-specific context
 like build commands, code patterns, and conventions it discovered during
 initialization.
 
 ### Attribution Settings
 
-By default, Crush adds attribution information to Git commits and pull requests
+By default, Pluse adds attribution information to Git commits and pull requests
 it creates. You can customize this behavior with the `attribution` option:
 
 ```json
 {
-  "$schema": "https://charm.land/crush.json",
+  "$schema": "https://charm.land/pluse.json",
   "options": {
     "attribution": {
       "trailer_style": "co-authored-by",
@@ -398,16 +398,16 @@ it creates. You can customize this behavior with the `attribution` option:
 
 - `trailer_style`: Controls the attribution trailer added to commit messages
   (default: `assisted-by`)
-	- `assisted-by`: Adds `Assisted-by: [Model Name] via Crush <crush@charm.land>`
+	- `assisted-by`: Adds `Assisted-by: [Model Name] via Pluse <pluse@charm.land>`
 	  (includes the model name)
-	- `co-authored-by`: Adds `Co-Authored-By: Crush <crush@charm.land>`
+	- `co-authored-by`: Adds `Co-Authored-By: Pluse <pluse@charm.land>`
 	- `none`: No attribution trailer
-- `generated_with`: When true (default), adds `💘 Generated with Crush` line to
+- `generated_with`: When true (default), adds `💘 Generated with Pluse` line to
   commit messages and PR descriptions
 
 ### Custom Providers
 
-Crush supports custom provider configurations for both OpenAI-compatible and
+Pluse supports custom provider configurations for both OpenAI-compatible and
 Anthropic-compatible APIs.
 
 > [!NOTE]
@@ -423,7 +423,7 @@ API. Don't forget to set `DEEPSEEK_API_KEY` in your environment.
 
 ```json
 {
-  "$schema": "https://charm.land/crush.json",
+  "$schema": "https://charm.land/pluse.json",
   "providers": {
     "deepseek": {
       "type": "openai-compat",
@@ -452,7 +452,7 @@ Custom Anthropic-compatible providers follow this format:
 
 ```json
 {
-  "$schema": "https://charm.land/crush.json",
+  "$schema": "https://charm.land/pluse.json",
   "providers": {
     "custom-anthropic": {
       "type": "anthropic",
@@ -482,11 +482,11 @@ Custom Anthropic-compatible providers follow this format:
 
 ### Amazon Bedrock
 
-Crush currently supports running Anthropic models through Bedrock, with caching disabled.
+Pluse currently supports running Anthropic models through Bedrock, with caching disabled.
 
 - A Bedrock provider will appear once you have AWS configured, i.e. `aws configure`
-- Crush also expects the `AWS_REGION` or `AWS_DEFAULT_REGION` to be set
-- To use a specific AWS profile set `AWS_PROFILE` in your environment, i.e. `AWS_PROFILE=myprofile crush`
+- Pluse also expects the `AWS_REGION` or `AWS_DEFAULT_REGION` to be set
+- To use a specific AWS profile set `AWS_PROFILE` in your environment, i.e. `AWS_PROFILE=myprofile pluse`
 - Alternatively to `aws configure`, you can also just set `AWS_BEARER_TOKEN_BEDROCK`
 
 ### Vertex AI Platform
@@ -501,7 +501,7 @@ To add specific models to the configuration, configure as such:
 
 ```json
 {
-  "$schema": "https://charm.land/crush.json",
+  "$schema": "https://charm.land/pluse.json",
   "providers": {
     "vertexai": {
       "models": [
@@ -573,28 +573,28 @@ Local models can also be configured via OpenAI-compatible API. Here are two comm
 
 ## Logging
 
-Sometimes you need to look at logs. Luckily, Crush logs all sorts of
-stuff. Logs are stored in `./.crush/logs/crush.log` relative to the project.
+Sometimes you need to look at logs. Luckily, Pluse logs all sorts of
+stuff. Logs are stored in `./.pluse/logs/pluse.log` relative to the project.
 
 The CLI also contains some helper commands to make perusing recent logs easier:
 
 ```bash
 # Print the last 1000 lines
-crush logs
+pluse logs
 
 # Print the last 500 lines
-crush logs --tail 500
+pluse logs --tail 500
 
 # Follow logs in real time
-crush logs --follow
+pluse logs --follow
 ```
 
-Want more logging? Run `crush` with the `--debug` flag, or enable it in the
+Want more logging? Run `pluse` with the `--debug` flag, or enable it in the
 config:
 
 ```json
 {
-  "$schema": "https://charm.land/crush.json",
+  "$schema": "https://charm.land/pluse.json",
   "options": {
     "debug": true,
     "debug_lsp": true
@@ -604,10 +604,10 @@ config:
 
 ## Provider Auto-Updates
 
-By default, Crush automatically checks for the latest and greatest list of
+By default, Pluse automatically checks for the latest and greatest list of
 providers and models from [Catwalk](https://github.com/charmbracelet/catwalk),
-the open source Crush provider database. This means that when new providers and
-models are available, or when model metadata changes, Crush automatically
+the open source Pluse provider database. This means that when new providers and
+models are available, or when model metadata changes, Pluse automatically
 updates your local configuration.
 
 ### Disabling automatic provider updates
@@ -617,60 +617,60 @@ air-gapped environments, this might not be want you want, and this feature can
 be disabled.
 
 To disable automatic provider updates, set `disable_provider_auto_update` into
-your `crush.json` config:
+your `pluse.json` config:
 
 ```json
 {
-  "$schema": "https://charm.land/crush.json",
+  "$schema": "https://charm.land/pluse.json",
   "options": {
     "disable_provider_auto_update": true
   }
 }
 ```
 
-Or set the `CRUSH_DISABLE_PROVIDER_AUTO_UPDATE` environment variable:
+Or set the `PLUSE_DISABLE_PROVIDER_AUTO_UPDATE` environment variable:
 
 ```bash
-export CRUSH_DISABLE_PROVIDER_AUTO_UPDATE=1
+export PLUSE_DISABLE_PROVIDER_AUTO_UPDATE=1
 ```
 
 ### Manually updating providers
 
-Manually updating providers is possible with the `crush update-providers`
+Manually updating providers is possible with the `pluse update-providers`
 command:
 
 ```bash
 # Update providers remotely from Catwalk.
-crush update-providers
+pluse update-providers
 
 # Update providers from a custom Catwalk base URL.
-crush update-providers https://example.com/
+pluse update-providers https://example.com/
 
 # Update providers from a local file.
-crush update-providers /path/to/local-providers.json
+pluse update-providers /path/to/local-providers.json
 
-# Reset providers to the embedded version, embedded at crush at build time.
-crush update-providers embedded
+# Reset providers to the embedded version, embedded at pluse at build time.
+pluse update-providers embedded
 
 # For more info:
-crush update-providers --help
+pluse update-providers --help
 ```
 
 ## Metrics
 
-Crush records pseudonymous usage metrics (tied to a device-specific hash),
+Pluse records pseudonymous usage metrics (tied to a device-specific hash),
 which maintainers rely on to inform development and support priorities. The
 metrics include solely usage metadata; prompts and responses are NEVER
 collected.
 
-Details on exactly what’s collected are in the source code ([here](https://github.com/charmbracelet/crush/tree/main/internal/event)
-and [here](https://github.com/charmbracelet/crush/blob/main/internal/llm/agent/event.go)).
+Details on exactly what’s collected are in the source code ([here](https://github.com/kehr/pluse/tree/main/internal/event)
+and [here](https://github.com/kehr/pluse/blob/main/internal/llm/agent/event.go)).
 
 You can opt out of metrics collection at any time by setting the environment
 variable by setting the following in your environment:
 
 ```bash
-export CRUSH_DISABLE_METRICS=1
+export PLUSE_DISABLE_METRICS=1
 ```
 
 Or by setting the following in your config:
@@ -683,12 +683,12 @@ Or by setting the following in your config:
 }
 ```
 
-Crush also respects the [`DO_NOT_TRACK`](https://consoledonottrack.com)
+Pluse also respects the [`DO_NOT_TRACK`](https://consoledonottrack.com)
 convention which can be enabled via `export DO_NOT_TRACK=1`.
 
 ## Contributing
 
-See the [contributing guide](https://github.com/charmbracelet/crush?tab=contributing-ov-file#contributing).
+See the [contributing guide](https://github.com/kehr/pluse?tab=contributing-ov-file#contributing).
 
 ## Whatcha think?
 
@@ -704,7 +704,7 @@ We’d love to hear your thoughts on this project. Need help? We gotchu. You can
 
 ## License
 
-[FSL-1.1-MIT](https://github.com/charmbracelet/crush/raw/main/LICENSE.md)
+[FSL-1.1-MIT](https://github.com/kehr/pluse/raw/main/LICENSE.md)
 
 ---
 

@@ -1,4 +1,4 @@
-module github.com/charmbracelet/crush
+module github.com/kehr/pluse
 
 go 1.25.5
 

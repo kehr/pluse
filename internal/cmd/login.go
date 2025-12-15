@@ -9,21 +9,21 @@ import (
 	"strings"
 
 	"charm.land/lipgloss/v2"
-	"github.com/charmbracelet/crush/internal/config"
-	"github.com/charmbracelet/crush/internal/oauth/claude"
+	"github.com/kehr/pluse/internal/config"
+	"github.com/kehr/pluse/internal/oauth/claude"
 	"github.com/spf13/cobra"
 )
 
 var loginCmd = &cobra.Command{
 	Aliases: []string{"auth"},
 	Use:     "login [platform]",
-	Short:   "Login Crush to a platform",
-	Long: `Login Crush to a specified platform.
+	Short:   "Login Pluse to a platform",
+	Long: `Login Pluse to a specified platform.
 The platform should be provided as an argument.
 Available platforms are: claude.`,
 	Example: `
 # Authenticate with Claude Code Max
-crush login claude
+pluse login claude
   `,
 	ValidArgs: []cobra.Completion{
 		"claude",

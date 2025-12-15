@@ -11,21 +11,21 @@ import (
 	"charm.land/lipgloss/v2"
 	"github.com/atotto/clipboard"
 	"github.com/charmbracelet/catwalk/pkg/catwalk"
-	"github.com/charmbracelet/crush/internal/agent"
-	"github.com/charmbracelet/crush/internal/config"
-	"github.com/charmbracelet/crush/internal/home"
-	"github.com/charmbracelet/crush/internal/tui/components/chat"
-	"github.com/charmbracelet/crush/internal/tui/components/core"
-	"github.com/charmbracelet/crush/internal/tui/components/core/layout"
-	"github.com/charmbracelet/crush/internal/tui/components/dialogs/claude"
-	"github.com/charmbracelet/crush/internal/tui/components/dialogs/models"
-	"github.com/charmbracelet/crush/internal/tui/components/logo"
-	lspcomponent "github.com/charmbracelet/crush/internal/tui/components/lsp"
-	"github.com/charmbracelet/crush/internal/tui/components/mcp"
-	"github.com/charmbracelet/crush/internal/tui/exp/list"
-	"github.com/charmbracelet/crush/internal/tui/styles"
-	"github.com/charmbracelet/crush/internal/tui/util"
-	"github.com/charmbracelet/crush/internal/version"
+	"github.com/kehr/pluse/internal/agent"
+	"github.com/kehr/pluse/internal/config"
+	"github.com/kehr/pluse/internal/home"
+	"github.com/kehr/pluse/internal/tui/components/chat"
+	"github.com/kehr/pluse/internal/tui/components/core"
+	"github.com/kehr/pluse/internal/tui/components/core/layout"
+	"github.com/kehr/pluse/internal/tui/components/dialogs/claude"
+	"github.com/kehr/pluse/internal/tui/components/dialogs/models"
+	"github.com/kehr/pluse/internal/tui/components/logo"
+	lspcomponent "github.com/kehr/pluse/internal/tui/components/lsp"
+	"github.com/kehr/pluse/internal/tui/components/mcp"
+	"github.com/kehr/pluse/internal/tui/exp/list"
+	"github.com/kehr/pluse/internal/tui/styles"
+	"github.com/kehr/pluse/internal/tui/util"
+	"github.com/kehr/pluse/internal/version"
 )
 
 type Splash interface {
@@ -761,7 +761,6 @@ func (s *splashCmp) logoBlock() string {
 			FieldColor:   t.Primary,
 			TitleColorA:  t.Secondary,
 			TitleColorB:  t.Primary,
-			CharmColor:   t.Secondary,
 			VersionColor: t.Primary,
 			Width:        s.width - logoStyle.GetHorizontalFrameSize(),
 		}),

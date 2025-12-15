@@ -10,10 +10,10 @@ import (
 	"strings"
 
 	"charm.land/fantasy"
-	"github.com/charmbracelet/crush/internal/config"
-	"github.com/charmbracelet/crush/internal/filepathext"
-	"github.com/charmbracelet/crush/internal/fsext"
-	"github.com/charmbracelet/crush/internal/permission"
+	"github.com/kehr/pluse/internal/config"
+	"github.com/kehr/pluse/internal/filepathext"
+	"github.com/kehr/pluse/internal/fsext"
+	"github.com/kehr/pluse/internal/permission"
 )
 
 type LSParams struct {

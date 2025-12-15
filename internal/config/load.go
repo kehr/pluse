@@ -17,11 +17,11 @@ import (
 	"testing"
 
 	"github.com/charmbracelet/catwalk/pkg/catwalk"
-	"github.com/charmbracelet/crush/internal/csync"
-	"github.com/charmbracelet/crush/internal/env"
-	"github.com/charmbracelet/crush/internal/fsext"
-	"github.com/charmbracelet/crush/internal/home"
-	"github.com/charmbracelet/crush/internal/log"
+	"github.com/kehr/pluse/internal/csync"
+	"github.com/kehr/pluse/internal/env"
+	"github.com/kehr/pluse/internal/fsext"
+	"github.com/kehr/pluse/internal/home"
+	"github.com/kehr/pluse/internal/log"
 	powernapConfig "github.com/charmbracelet/x/powernap/pkg/config"
 )
 
@@ -102,15 +102,15 @@ func Load(workingDir, dataDir string, debug bool) (*Config, error) {
 	return cfg, nil
 }
 
-func PushPopCrushEnv() func() {
+func PushPopPluseEnv() func() {
 	found := []string{}
 	for _, ev := range os.Environ() {
-		if strings.HasPrefix(ev, "CRUSH_") {
+		if strings.HasPrefix(ev, "PLUSE_") {
 			pair := strings.SplitN(ev, "=", 2)
 			if len(pair) != 2 {
 				continue
 			}
-			found = append(found, strings.TrimPrefix(pair[0], "CRUSH_"))
+			found = append(found, strings.TrimPrefix(pair[0], "PLUSE_"))
 		}
 	}
 	backups := make(map[string]string)
@@ -119,7 +119,7 @@ func PushPopCrushEnv() func() {
 	}
 
 	for _, ev := range found {
-		os.Setenv(ev, os.Getenv("CRUSH_"+ev))
+		os.Setenv(ev, os.Getenv("PLUSE_"+ev))
 	}
 
 	restore := func() {
@@ -132,7 +132,7 @@ func PushPopCrushEnv() func() {
 
 func (c *Config) configureProviders(env env.Env, resolver VariableResolver, knownProviders []catwalk.Provider) error {
 	knownProviderNames := make(map[string]bool)
-	restore := PushPopCrushEnv()
+	restore := PushPopPluseEnv()
 	defer restore()
 
 	for _, p := range knownProviders {
@@ -355,7 +355,7 @@ func (c *Config) setDefaults(workingDir, dataDir string) {
 	slices.Sort(c.Options.ContextPaths)
 	c.Options.ContextPaths = slices.Compact(c.Options.ContextPaths)
 
-	if str, ok := os.LookupEnv("CRUSH_DISABLE_PROVIDER_AUTO_UPDATE"); ok {
+	if str, ok := os.LookupEnv("PLUSE_DISABLE_PROVIDER_AUTO_UPDATE"); ok {
 		c.Options.DisableProviderAutoUpdate, _ = strconv.ParseBool(str)
 	}
 
@@ -699,8 +699,8 @@ func GlobalConfigData() string {
 	}
 
 	// return the path to the main data directory
-	// for windows, it should be in `%LOCALAPPDATA%/crush/`
-	// for linux and macOS, it should be in `$HOME/.local/share/crush/`
+	// for windows, it should be in `%LOCALAPPDATA%/pluse/`
+	// for linux and macOS, it should be in `$HOME/.local/share/pluse/`
 	if runtime.GOOS == "windows" {
 		localAppData := os.Getenv("LOCALAPPDATA")
 		if localAppData == "" {

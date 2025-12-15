@@ -11,11 +11,11 @@ import (
 	"strings"
 
 	tea "charm.land/bubbletea/v2"
-	"github.com/charmbracelet/crush/internal/agent/tools/mcp"
-	"github.com/charmbracelet/crush/internal/config"
-	"github.com/charmbracelet/crush/internal/home"
-	"github.com/charmbracelet/crush/internal/tui/components/chat"
-	"github.com/charmbracelet/crush/internal/tui/util"
+	"github.com/kehr/pluse/internal/agent/tools/mcp"
+	"github.com/kehr/pluse/internal/config"
+	"github.com/kehr/pluse/internal/home"
+	"github.com/kehr/pluse/internal/tui/components/chat"
+	"github.com/kehr/pluse/internal/tui/util"
 )
 
 const (
@@ -61,7 +61,7 @@ func buildCommandSources(cfg *config.Config) []commandSource {
 	// Home directory
 	if home := home.Dir(); home != "" {
 		sources = append(sources, commandSource{
-			path:   filepath.Join(home, ".crush", "commands"),
+			path:   filepath.Join(home, ".pluse", "commands"),
 			prefix: userCommandPrefix,
 		})
 	}
@@ -83,7 +83,7 @@ func getXDGCommandsDir() string {
 		}
 	}
 	if xdgHome != "" {
-		return filepath.Join(xdgHome, "crush", "commands")
+		return filepath.Join(xdgHome, "pluse", "commands")
 	}
 	return ""
 }

@@ -1,4 +1,4 @@
-// Package agent is the core orchestration layer for Crush AI agents.
+// Package agent is the core orchestration layer for Pluse AI agents.
 //
 // It provides session-based AI agent functionality for managing
 // conversations, tool execution, and message handling. It coordinates
@@ -28,13 +28,13 @@ import (
 	"charm.land/fantasy/providers/openai"
 	"charm.land/fantasy/providers/openrouter"
 	"github.com/charmbracelet/catwalk/pkg/catwalk"
-	"github.com/charmbracelet/crush/internal/agent/tools"
-	"github.com/charmbracelet/crush/internal/config"
-	"github.com/charmbracelet/crush/internal/csync"
-	"github.com/charmbracelet/crush/internal/message"
-	"github.com/charmbracelet/crush/internal/permission"
-	"github.com/charmbracelet/crush/internal/session"
-	"github.com/charmbracelet/crush/internal/stringext"
+	"github.com/kehr/pluse/internal/agent/tools"
+	"github.com/kehr/pluse/internal/config"
+	"github.com/kehr/pluse/internal/csync"
+	"github.com/kehr/pluse/internal/message"
+	"github.com/kehr/pluse/internal/permission"
+	"github.com/kehr/pluse/internal/session"
+	"github.com/kehr/pluse/internal/stringext"
 )
 
 //go:embed templates/title.md
@@ -620,7 +620,7 @@ func (a *sessionAgent) Summarize(ctx context.Context, sessionID string, opts fan
 }
 
 func (a *sessionAgent) getCacheControlOptions() fantasy.ProviderOptions {
-	if t, _ := strconv.ParseBool(os.Getenv("CRUSH_DISABLE_ANTHROPIC_CACHE")); t {
+	if t, _ := strconv.ParseBool(os.Getenv("PLUSE_DISABLE_ANTHROPIC_CACHE")); t {
 		return fantasy.ProviderOptions{}
 	}
 	return fantasy.ProviderOptions{

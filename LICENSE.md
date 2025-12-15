@@ -7,6 +7,7 @@ FSL-1.1-MIT
 ## Notice
 
 Copyright 2025 Charmbracelet, Inc
+Copyright 2025 kehr
 
 ## Terms and Conditions
 

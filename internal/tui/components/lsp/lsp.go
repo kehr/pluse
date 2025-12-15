@@ -5,12 +5,12 @@ import (
 	"strings"
 
 	"charm.land/lipgloss/v2"
-	"github.com/charmbracelet/crush/internal/app"
-	"github.com/charmbracelet/crush/internal/config"
-	"github.com/charmbracelet/crush/internal/csync"
-	"github.com/charmbracelet/crush/internal/lsp"
-	"github.com/charmbracelet/crush/internal/tui/components/core"
-	"github.com/charmbracelet/crush/internal/tui/styles"
+	"github.com/kehr/pluse/internal/app"
+	"github.com/kehr/pluse/internal/config"
+	"github.com/kehr/pluse/internal/csync"
+	"github.com/kehr/pluse/internal/lsp"
+	"github.com/kehr/pluse/internal/tui/components/core"
+	"github.com/kehr/pluse/internal/tui/styles"
 	"github.com/charmbracelet/x/powernap/pkg/lsp/protocol"
 )
 

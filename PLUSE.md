@@ -1,4 +1,4 @@
-# Crush Development Guide
+# Pluse Development Guide
 
 ## Build/Test/Lint Commands
 

@@ -15,13 +15,13 @@ import (
 	tea "charm.land/bubbletea/v2"
 	"charm.land/lipgloss/v2"
 	"github.com/charmbracelet/colorprofile"
-	"github.com/charmbracelet/crush/internal/app"
-	"github.com/charmbracelet/crush/internal/config"
-	"github.com/charmbracelet/crush/internal/db"
-	"github.com/charmbracelet/crush/internal/event"
-	"github.com/charmbracelet/crush/internal/stringext"
-	"github.com/charmbracelet/crush/internal/tui"
-	"github.com/charmbracelet/crush/internal/version"
+	"github.com/kehr/pluse/internal/app"
+	"github.com/kehr/pluse/internal/config"
+	"github.com/kehr/pluse/internal/db"
+	"github.com/kehr/pluse/internal/event"
+	"github.com/kehr/pluse/internal/stringext"
+	"github.com/kehr/pluse/internal/tui"
+	"github.com/kehr/pluse/internal/version"
 	"github.com/charmbracelet/fang"
 	uv "github.com/charmbracelet/ultraviolet"
 	"github.com/charmbracelet/x/ansi"
@@ -32,7 +32,7 @@ import (
 
 func init() {
 	rootCmd.PersistentFlags().StringP("cwd", "c", "", "Current working directory")
-	rootCmd.PersistentFlags().StringP("data-dir", "D", "", "Custom crush data directory")
+	rootCmd.PersistentFlags().StringP("data-dir", "D", "", "Custom pluse data directory")
 	rootCmd.PersistentFlags().BoolP("debug", "d", false, "Debug")
 	rootCmd.Flags().BoolP("help", "h", false, "Help")
 	rootCmd.Flags().BoolP("yolo", "y", false, "Automatically accept all permissions (dangerous mode)")
@@ -48,32 +48,32 @@ func init() {
 }
 
 var rootCmd = &cobra.Command{
-	Use:   "crush",
+	Use:   "pluse",
 	Short: "Terminal-based AI assistant for software development",
-	Long: `Crush is a powerful terminal-based AI assistant that helps with software development tasks.
+	Long: `Pluse is a powerful terminal-based AI assistant that helps with software development tasks.
 It provides an interactive chat interface with AI capabilities, code analysis, and LSP integration
 to assist developers in writing, debugging, and understanding code directly from the terminal.`,
 	Example: `
 # Run in interactive mode
-crush
+pluse
 
 # Run with debug logging
-crush -d
+pluse -d
 
 # Run with debug logging in a specific directory
-crush -d -c /path/to/project
+pluse -d -c /path/to/project
 
 # Run with custom data directory
-crush -D /path/to/custom/.crush
+pluse -D /path/to/custom/.pluse
 
 # Print version
-crush -v
+pluse -v
 
 # Run a single non-interactive prompt
-crush run "Explain the use of context in Go"
+pluse run "Explain the use of context in Go"
 
 # Run in dangerous mode (auto-accept all permissions)
-crush -y
+pluse -y
   `,
 	RunE: func(cmd *cobra.Command, args []string) error {
 		app, err := setupAppWithProgressBar(cmd)
@@ -99,7 +99,7 @@ crush -y
 		if _, err := program.Run(); err != nil {
 			event.Error(err)
 			slog.Error("TUI run error", "error", err)
-			return errors.New("Crush crashed. If metrics are enabled, we were notified about it. If you'd like to report it, please copy the stacktrace above and open an issue at https://github.com/charmbracelet/crush/issues/new?template=bug.yml") //nolint:staticcheck
+			return errors.New("Pluse crashed. If metrics are enabled, we were notified about it. If you'd like to report it, please copy the stacktrace above and open an issue at https://github.com/kehr/pluse/issues/new?template=bug.yml") //nolint:staticcheck
 		}
 		return nil
 	},
@@ -195,7 +195,7 @@ func setupApp(cmd *cobra.Command) (*app.App, error) {
 	}
 	cfg.Permissions.SkipRequests = yolo
 
-	if err := createDotCrushDir(cfg.Options.DataDirectory); err != nil {
+	if err := createDotPluseDir(cfg.Options.DataDirectory); err != nil {
 		return nil, err
 	}
 
@@ -219,7 +219,7 @@ func setupApp(cmd *cobra.Command) (*app.App, error) {
 }
 
 func shouldEnableMetrics() bool {
-	if v, _ := strconv.ParseBool(os.Getenv("CRUSH_DISABLE_METRICS")); v {
+	if v, _ := strconv.ParseBool(os.Getenv("PLUSE_DISABLE_METRICS")); v {
 		return false
 	}
 	if v, _ := strconv.ParseBool(os.Getenv("DO_NOT_TRACK")); v {
@@ -266,7 +266,7 @@ func ResolveCwd(cmd *cobra.Command) (string, error) {
 	return cwd, nil
 }
 
-func createDotCrushDir(dir string) error {
+func createDotPluseDir(dir string) error {
 	if err := os.MkdirAll(dir, 0o700); err != nil {
 		return fmt.Errorf("failed to create data directory: %q %w", dir, err)
 	}

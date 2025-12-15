@@ -1,5 +1,5 @@
 // Package mcp provides functionality for managing Model Context Protocol (MCP)
-// clients within the Crush application.
+// clients within the Pluse application.
 package mcp
 
 import (
@@ -17,12 +17,12 @@ import (
 	"sync"
 	"time"
 
-	"github.com/charmbracelet/crush/internal/config"
-	"github.com/charmbracelet/crush/internal/csync"
-	"github.com/charmbracelet/crush/internal/home"
-	"github.com/charmbracelet/crush/internal/permission"
-	"github.com/charmbracelet/crush/internal/pubsub"
-	"github.com/charmbracelet/crush/internal/version"
+	"github.com/kehr/pluse/internal/config"
+	"github.com/kehr/pluse/internal/csync"
+	"github.com/kehr/pluse/internal/home"
+	"github.com/kehr/pluse/internal/permission"
+	"github.com/kehr/pluse/internal/pubsub"
+	"github.com/kehr/pluse/internal/version"
 	"github.com/modelcontextprotocol/go-sdk/mcp"
 )
 
@@ -273,9 +273,9 @@ func createSession(ctx context.Context, name string, m config.MCPConfig, resolve
 
 	client := mcp.NewClient(
 		&mcp.Implementation{
-			Name:    "crush",
+			Name:    "pluse",
 			Version: version.Version,
-			Title:   "Crush",
+			Title:   "Pluse",
 		},
 		&mcp.ClientOptions{
 			ToolListChangedHandler: func(context.Context, *mcp.ToolListChangedRequest) {
