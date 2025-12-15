@@ -10,7 +10,8 @@ const (
 	ArrowRightIcon    string = "→"
 	CenterSpinnerIcon string = "⋯"
 	LoadingIcon       string = "⟳"
-	DocumentIcon      string = "🖼"
+	DocumentIcon      string = "⎗"
+	ImageIcon         string = "⌘"
 	ModelIcon         string = "◇"
 
 	// Tool call icons

@@ -6,6 +6,8 @@ import (
 
 	tea "charm.land/bubbletea/v2"
 	"charm.land/lipgloss/v2"
+	"github.com/charmbracelet/x/ansi"
+	"github.com/charmbracelet/x/powernap/pkg/lsp/protocol"
 	"github.com/kehr/pluse/internal/config"
 	"github.com/kehr/pluse/internal/csync"
 	"github.com/kehr/pluse/internal/fsext"
@@ -14,8 +16,6 @@ import (
 	"github.com/kehr/pluse/internal/session"
 	"github.com/kehr/pluse/internal/tui/styles"
 	"github.com/kehr/pluse/internal/tui/util"
-	"github.com/charmbracelet/x/ansi"
-	"github.com/charmbracelet/x/powernap/pkg/lsp/protocol"
 )
 
 type Header interface {
@@ -63,7 +63,7 @@ func (h *header) View() string {
 
 	const (
 		gap          = " "
-		diag         = "╱"
+		diag         = "~"
 		minDiags     = 3
 		leftPadding  = 1
 		rightPadding = 1
@@ -73,7 +73,7 @@ func (h *header) View() string {
 
 	var b strings.Builder
 
-	b.WriteString(t.S().Base.Foreground(t.Secondary).Render("Charm™"))
+	// b.WriteString(t.S().Base.Foreground(t.Secondary).Render("Charm™"))
 	b.WriteString(gap)
 	b.WriteString(styles.ApplyBoldForegroundGrad("PLUSE", t.Secondary, t.Primary))
 	b.WriteString(gap)

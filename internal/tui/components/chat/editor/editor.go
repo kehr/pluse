@@ -17,6 +17,7 @@ import (
 	tea "charm.land/bubbletea/v2"
 	"charm.land/lipgloss/v2"
 	"github.com/kehr/pluse/internal/app"
+	"github.com/kehr/pluse/internal/clipboard"
 	"github.com/kehr/pluse/internal/fsext"
 	"github.com/kehr/pluse/internal/message"
 	"github.com/kehr/pluse/internal/session"
@@ -217,10 +218,25 @@ func (m *editorCmp) Update(msg tea.Msg) (util.Model, tea.Cmd) {
 		m.textarea.SetValue(msg.Text)
 		m.textarea.MoveToEnd()
 	case tea.PasteMsg:
+		// First, check if clipboard contains an image.
+		if imgPath, err := clipboard.ReadImage(); err == nil && imgPath != "" {
+			if content, err := os.ReadFile(imgPath); err == nil {
+				attachment := message.Attachment{
+					FilePath: imgPath,
+					FileName: fmt.Sprintf("[Image %d]", len(m.attachments)+1),
+					MimeType: "image/png",
+					Content:  content,
+				}
+				return m, util.CmdHandler(filepicker.FilePickedMsg{
+					Attachment: attachment,
+				})
+			}
+		}
+
+		// No image in clipboard, try to handle as file path.
 		path := strings.ReplaceAll(msg.Content, "\\ ", " ")
-		// try to get an image
-		path, err := filepath.Abs(strings.TrimSpace(path))
-		if err != nil {
+		path, pathErr := filepath.Abs(strings.TrimSpace(path))
+		if pathErr != nil {
 			m.textarea, cmd = m.textarea.Update(msg)
 			return m, cmd
 		}
@@ -258,6 +274,23 @@ func (m *editorCmp) Update(msg tea.Msg) (util.Model, tea.Cmd) {
 		m.setEditorPrompt()
 		return m, nil
 	case tea.KeyPressMsg:
+		// Check for Ctrl+V to handle clipboard image paste.
+		if msg.String() == "ctrl+v" {
+			if imgPath, err := clipboard.ReadImage(); err == nil && imgPath != "" {
+				if content, err := os.ReadFile(imgPath); err == nil {
+					attachment := message.Attachment{
+						FilePath: imgPath,
+						FileName: fmt.Sprintf("[Image %d]", len(m.attachments)+1),
+						MimeType: "image/png",
+						Content:  content,
+					}
+					return m, util.CmdHandler(filepicker.FilePickedMsg{
+						Attachment: attachment,
+					})
+				}
+			}
+		}
+
 		cur := m.textarea.Cursor()
 		curIdx := m.textarea.Width()*cur.Y + cur.X
 		switch {
@@ -462,7 +495,10 @@ func (m *editorCmp) attachmentsContent() string {
 		Foreground(t.FgBase)
 	for i, attachment := range m.attachments {
 		var filename string
-		if len(attachment.FileName) > 10 {
+		if strings.HasPrefix(attachment.FileName, "[Image") {
+			// Clipboard image, show with camera icon.
+			filename = fmt.Sprintf(" %s %s", styles.ImageIcon, attachment.FileName)
+		} else if len(attachment.FileName) > 10 {
 			filename = fmt.Sprintf(" %s %s...", styles.DocumentIcon, attachment.FileName[0:7])
 		} else {
 			filename = fmt.Sprintf(" %s %s", styles.DocumentIcon, attachment.FileName)
